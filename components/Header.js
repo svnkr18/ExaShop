@@ -7,8 +7,10 @@ import {
   BoltIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Header() {
+  const { data: session } = useSession();
   return (
     <div>
       {/* top navbar */}
@@ -36,8 +38,8 @@ function Header() {
         {/* right section of navbar */}
 
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap ">
-          <div className="link">
-            <p>Hello Shubhankar!</p>
+          <div className="link" onClick={!session ? signIn : signOut}>
+            <p>{session ? `Hello,${session.user.name}` : "signIn"}</p>
             <p className="font-extrabold">Account & List</p>
           </div>
 
