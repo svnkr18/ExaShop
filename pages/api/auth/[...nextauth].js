@@ -9,10 +9,6 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
     // ...add more providers here
-    TwitterProvider({
-      clientId: process.env.TWITTER_ID,
-      clientSecret: process.env.TWITTER_SECRET,
-    }),
   ],
 };
 export default NextAuth(authOptions);

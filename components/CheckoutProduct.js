@@ -1,9 +1,28 @@
 import Image from "next/image";
 import React from "react";
 import ReactStars from "react-rating-stars-component";
+import { useDispatch } from "react-redux";
+import { addToBasket, removeFromBasket } from "../app/slices/basketSlice";
 
 function CheckoutProduct({ id, title, price, image, description }) {
   const price_item = Math.round(price * 30);
+
+  const dispatch = useDispatch();
+  const addItemToBasket = () => {
+    const product = {
+      id,
+      title,
+      price,
+      image,
+      description,
+    };
+    dispatch(addToBasket(product));
+  };
+
+  const removeItemFromBasket = () => {
+    dispatch(removeFromBasket({ id }));
+  };
+
   return (
     <div className="grid grid-cols-5">
       <Image src={image} height={200} width={200} object-fit="contain" />
@@ -17,11 +36,16 @@ function CheckoutProduct({ id, title, price, image, description }) {
           edit={false}
           activeColor="#ffd700"
         />
-        <p className="text-xs mt-2 line-clamp-2 mb-5">{description}</p>
+        <p className="text-xs my-2 line-clamp-2">{description}</p>
       </div>
       <div className=" flex flex-col space-y-2 my-auto justify-self-end">
-        <button className="button">Add to basket</button>
-        <button className="button"> Remove from basket</button>
+        <button onClick={addItemToBasket} className="button">
+          Add to basket
+        </button>
+        <button onClick={removeItemFromBasket} className="button">
+          {" "}
+          Remove from basket
+        </button>
       </div>
     </div>
   );
